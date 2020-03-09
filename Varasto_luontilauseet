@@ -1,0 +1,43 @@
+CREATE TABLE Varasto ( 
+varastoID int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+nimi VARCHAR (150) NOT NULL, 
+tuoteryhma VARCHAR(150) NOT NULL, 
+sijainti VARCHAR(150) NOT NULL 
+); 
+ 
+CREATE TABLE Asiakas ( 
+asiakasID int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+nimi VARCHAR(150) NOT NULL, 
+sijainti VARCHAR(150) NOT NULL, 
+luottoraja double 
+); 
+ 
+CREATE TABLE Tuote ( 
+tuoteID int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+varastoID int NOT NULL, 
+tuotekuvaus VARCHAR(150), 
+hinta double NOT NULL, 
+maara int NOT NULL, 
+varaukset int, 
+ 
+FOREIGN KEY (varastoID) REFERENCES Varasto(varastoID) 
+ ON UPDATE CASCADE 
+ ON DELETE NO ACTION 
+); 
+  
+  
+CREATE TABLE Projekti ( 
+projektiID int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+varastoID int NOT NULL, 
+asiakasID int NOT NULL, 
+hinta double NOT NULL, 
+aloitettu DATE NOT NULL, 
+valmis BOOLEAN, 
+ 
+FOREIGN KEY (varastoID) REFERENCES Varasto(varastoID) 
+ ON UPDATE CASCADE 
+ ON DELETE NO ACTION, 
+FOREIGN KEY (asiakasID) REFERENCES Asiakas(asiakasID) 
+ ON UPDATE CASCADE 
+ ON DELETE NO ACTION   
+);

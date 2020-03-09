@@ -1,0 +1,46 @@
+Etsitään Nosturitoverit Oy:n ja Nostoapu Oy:n tekemien hankintojen hinnat, sekä heidän luottorajansa. 
+
+SELECT nimi, luottoraja, hinta 
+FROM Asiakas JOIN Projekti ON Asiakas.asiakasID = Projekti.asiakasID 
+WHERE nimi = 'Nosturitoverit Oy' OR nimi = 'Nostoapu Oy' 
+ 
+ 
+Etsitään kaikki asiakkaat, jotka ostivat tuotteen ”siirtomoottori”. 
+
+SELECT Asiakas.nimi, tuotekuvaus 
+FROM Asiakas JOIN Projekti ON Asiakas.asiakasID = Projekti.asiakasID 
+JOIN Varasto ON Varasto.varastoID = Projekti.varastoID 
+JOIN Tuote ON Varasto.varastoID = Tuote.varastoID 
+WHERE tuotekuvaus = 'siirtomoottori' 
+ 
+ 
+Selvitetään, kuinka paljon asiakkaalla ”Rauta-Pete Oy” on vielä jäljellä luottoa. 
+
+SELECT Asiakas.nimi, Asiakas.luottoraja-Projekti.hinta AS luotto  
+FROM Asiakas JOIN Projekti ON Asiakas.asiakasID = Projekti.asiakasID 
+WHERE nimi = 'Rauta-Pete oy' 
+
+ 
+Etsitään kaikki tuotteet varastosta ’R-varasto’ ja järjestetään ne saldomääriensä mukaan suurimmasta pienimpään. 
+
+SELECT Varasto.nimi, Tuote.tuotekuvaus, maara 
+FROM Varasto JOIN Tuote ON Varasto.varastoID = Tuote.varastoID 
+WHERE Varasto.nimi = 'R-varasto' 
+ORDER BY maara DESC 
+ 
+ 
+Selvitetään kaikkien varastojen tuotteiden yhteismäärät (eri nimikkeiden määrä) ja järjestetään ne varaston nimien mukaisesti aakkosittain. 
+
+SELECT nimi, COUNT(maara) AS tuotenimikkeitä 
+FROM Varasto JOIN Tuote ON Varasto.varastoID = Tuote.varastoID 
+GROUP BY nimi 
+ 
+ 
+Etsitään kaikki varatut tuotteet ja järjestä ne hintansa mukaan halvimmasta kalleimpaan tuotteeseen. 
+
+SELECT tuotekuvaus, hinta, varaukset 
+FROM Tuote 
+WHERE varaukset != 0 
+ORDER BY hinta 
+ 
+ 
